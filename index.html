@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FF Sensitivity Tool</title>
+  <style>
+    :root {
+      --primary: #4A6FA5;
+      --secondary: #6C8FC7;
+      --accent: #7D5BA6;
+      --dark: #0F1923;
+      --darker: #0A0E13;
+      --light: #ECE8E1;
+      --card-bg: #1A2A3A;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Rajdhani', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;700&display=swap');
+    
+    body {
+      background: var(--darker);
+      color: var(--light);
+      min-height: 100vh;
+      padding: 20px;
+      background-image: 
+        radial-gradient(circle at 75% 30%, #1E2A3A 0%, transparent 50%),
+        linear-gradient(to bottom, #0A0E13, #0F1923);
+    }
+    
+    .container {
+      max-width: 450px;
+      margin: 0 auto;
+      position: relative;
+    }
+    
+    /* Header */
+    .header {
+      text-align: center;
+      margin: 10px 0 25px;
+      padding-top: 10px;
+    }
+    
+    .header h1 {
+      color: var(--secondary);
+      font-size: 2.2rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 5px;
+      text-shadow: 0 0 15px rgba(108, 143, 199, 0.4);
+      font-weight: 800;
+      font-family: 'Rajdhani', sans-serif;
+    }
+    
+    /* Search Box */
+    .search-box {
+      background: var(--card-bg);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(74, 111, 165, 0.2);
+      position: relative;
+    }
+    
+    .search-box h2 {
+      color: var(--secondary);
+      text-align: center;
+      margin-bottom: 15px;
+      font-size: 1.3rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+    }
+    
+    #searchInput {
+      width: 100%;
+      padding: 14px 18px;
+      border-radius: 8px;
+      border: none;
+      background: rgba(10, 14, 19, 0.8);
+      color: white;
+      font-size: 1rem;
+      margin-bottom: 15px;
+      border: 1px solid rgba(108, 143, 199, 0.3);
+      font-family: 'Rajdhani', sans-serif;
+    }
+    
+    .generate-btn {
+      width: 100%;
+      padding: 16px;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      color: white;
+      font-weight: bold;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1.1rem;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      transition: all 0.3s;
+      font-family: 'Rajdhani', sans-serif;
+      box-shadow: 0 4px 10px rgba(74, 111, 165, 0.3);
+    }
+    
+    .generate-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 15px rgba(74, 111, 165, 0.4);
+    }
+    
+    .generate-btn:active {
+      transform: translateY(0);
+    }
+    
+    /* Devices of the Day Button */
+    .daily-devices-btn {
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(135deg, var(--accent), #8E54E9);
+      color: white;
+      font-weight: bold;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-top: 15px;
+      font-family: 'Rajdhani', sans-serif;
+      box-shadow: 0 4px 12px rgba(125, 91, 166, 0.3);
+    }
+    
+    /* Device List */
+    .devices-container {
+      max-height: 300px;
+      overflow-y: auto;
+      margin-bottom: 20px;
+      background: var(--card-bg);
+      border-radius: 12px;
+      padding: 15px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+    
+    .devices-container h3 {
+      color: var(--secondary);
+      text-align: center;
+      margin-bottom: 15px;
+      font-size: 1.2rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+    }
+    
+    .device-list {
+      list-style: none;
+    }
+    
+    .device-item {
+      padding: 14px 18px;
+      margin: 10px 0;
+      background: rgba(10, 14, 19, 0.7);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s;
+      border-left: 4px solid var(--primary);
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+    }
+    
+    .device-item::before {
+      content: "🎮";
+      margin-right: 12px;
+      font-size: 1.2rem;
+    }
+    
+    .device-item:hover {
+      background: rgba(74, 111, 165, 0.2);
+      transform: translateX(5px);
+    }
+    
+    /* Daily Devices Popup */
+    .daily-popup {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.8);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      display: none;
+    }
+    
+    .daily-content {
+      background: var(--card-bg);
+      border-radius: 12px;
+      padding: 25px;
+      width: 90%;
+      max-width: 400px;
+      box-shadow: 0 0 30px rgba(0, 0, 0, 0.6);
+      border: 1px solid var(--accent);
+      animation: modalFadeIn 0.5s ease;
+    }
+    
+    @keyframes modalFadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .daily-title {
+      color: var(--secondary);
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 1.4rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      font-family: 'Rajdhani', sans-serif;
+    }
+    
+    .daily-devices-list {
+      list-style: none;
+      margin-bottom: 20px;
+    }
+    
+    .daily-device-item {
+      padding: 12px 15px;
+      margin: 8px 0;
+      background: rgba(74, 111, 165, 0.2);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    
+    .daily-device-item:hover {
+      background: rgba(74, 111, 165, 0.4);
+    }
+    
+    .close-daily-btn {
+      display: block;
+      margin: 0 auto;
+      padding: 10px 25px;
+      background: transparent;
+      color: var(--secondary);
+      border: 1px solid var(--accent);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-weight: 600;
+    }
+    
+    .close-daily-btn:hover {
+      background: rgba(125, 91, 166, 0.2);
+    }
+    
+    /* Loading Modal */
+    .loading-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.8);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      display: none;
+    }
+
+    .loading-content {
+      background: var(--card-bg);
+      border-radius: 12px;
+      padding: 25px;
+      width: 90%;
+      max-width: 400px;
+      box-shadow: 0 0 30px rgba(0, 0, 0, 0.6);
+      border: 1px solid var(--accent);
+      animation: modalFadeIn 0.5s ease;
+    }
+
+    .loading-title {
+      color: var(--secondary);
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 1.3rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      font-family: 'Rajdhani', sans-serif;
+    }
+
+    .loading-text {
+      text-align: center;
+      margin-bottom: 20px;
+      color: var(--light);
+    }
+
+    .loading-bar-container {
+      height: 10px;
+      background: rgba(10, 14, 19, 0.8);
+      border-radius: 5px;
+      overflow: hidden;
+      margin-bottom: 20px;
+    }
+
+    .loading-bar {
+      height: 100%;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      border-radius: 5px;
+      width: 0%;
+      transition: width 0.1s linear;
+    }
+
+    .loading-percentage {
+      text-align: center;
+      font-weight: bold;
+      color: var(--secondary);
+      font-size: 1.1rem;
+    }
+    
+    /* Results Modal */
+    .result-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.8);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      display: none;
+    }
+    
+    .result-content {
+      background: var(--card-bg);
+      border-radius: 12px;
+      padding: 25px;
+      width: 90%;
+      max-width: 400px;
+      box-shadow: 0 0 30px rgba(0, 0, 0, 0.6);
+      border: 1px solid var(--primary);
+      animation: modalFadeIn 0.5s ease;
+    }
+    
+    .result-title {
+      color: var(--secondary);
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 1.5rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      font-family: 'Rajdhani', sans-serif;
+    }
+    
+    .sensitivity-item {
+      margin-bottom: 20px;
+    }
+    
+    .sensitivity-label {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+      font-size: 1rem;
+      font-weight: 500;
+    }
+    
+    .progress-container {
+      height: 10px;
+      background: rgba(10, 14, 19, 0.8);
+      border-radius: 5px;
+      overflow: hidden;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    }
+    
+    .progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      border-radius: 5px;
+      width: 0%;
+      transition: width 0.8s ease;
+    }
+    
+    .close-btn {
+      display: block;
+      margin: 25px auto 0;
+      padding: 12px 30px;
+      background: transparent;
+      color: var(--secondary);
+      border: 1px solid var(--primary);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      font-family: 'Rajdhani', sans-serif;
+    }
+    
+    .close-btn:hover {
+      background: rgba(74, 111, 165, 0.2);
+      transform: translateY(-2px);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>FREE FIRE SENSITIVITY</h1>
+    </div>
+    
+    <div class="search-box">
+      <h2>ENTER YOUR DEVICE</h2>
+      <input type="text" id="searchInput" placeholder="e.g. iPhone 15, Redmi Note 12" autocomplete="off" />
+      <button class="generate-btn" onclick="generateSensitivity()">GENERATE</button>
+    </div>
+    
+    <div class="devices-container">
+      <h3>POPULAR DEVICES</h3>
+      <ul class="device-list" id="devicesList">
+        <!-- Devices will be loaded here -->
+      </ul>
+    </div>
+    
+    <button class="daily-devices-btn" onclick="showDailyDevices()">DEVICES OF THE DAY</button>
+    
+    <!-- Daily Devices Popup -->
+    <div class="daily-popup" id="dailyPopup">
+      <div class="daily-content">
+        <div class="daily-title">TODAY'S RECOMMENDED DEVICES</div>
+        <ul class="daily-devices-list" id="dailyDevicesList">
+          <!-- Daily devices will be loaded here -->
+        </ul>
+        <button class="close-daily-btn" onclick="closeDailyPopup()">CLOSE</button>
+      </div>
+    </div>
+    
+    <!-- Loading Modal -->
+    <div class="loading-modal" id="loadingModal">
+      <div class="loading-content">
+        <div class="loading-title">CALCULATING SENSITIVITY</div>
+        <div class="loading-text">Please wait while we analyze your device...</div>
+        <div class="loading-bar-container">
+          <div class="loading-bar" id="loadingBar"></div>
+        </div>
+        <div class="loading-percentage" id="loadingPercentage">0%</div>
+      </div>
+    </div>
+    
+    <!-- Results Modal -->
+    <div class="result-modal" id="resultModal">
+      <div class="result-content">
+        <div class="result-title" id="resultTitle"></div>
+        
+        <div class="sensitivity-item">
+          <div class="sensitivity-label">
+            <span>General</span>
+            <span id="generalValue">0</span>
+          </div>
+          <div class="progress-container">
+            <div class="progress-bar" id="generalBar"></div>
+          </div>
+        </div>
+        
+        <div class="sensitivity-item">
+          <div class="sensitivity-label">
+            <span>Red Dot</span>
+            <span id="redDotValue">0</span>
+          </div>
+          <div class="progress-container">
+            <div class="progress-bar" id="redDotBar"></div>
+          </div>
+        </div>
+        
+        <div class="sensitivity-item">
+          <div class="sensitivity-label">
+            <span>2x Scope</span>
+            <span id="scope2xValue">0</span>
+          </div>
+          <div class="progress-container">
+            <div class="progress-bar" id="scope2xBar"></div>
+          </div>
+        </div>
+        
+        <div class="sensitivity-item">
+          <div class="sensitivity-label">
+            <span>4x Scope</span>
+            <span id="scope4xValue">0</span>
+          </div>
+          <div class="progress-container">
+            <div class="progress-bar" id="scope4xBar"></div>
+          </div>
+        </div>
+        
+        <div class="sensitivity-item">
+          <div class="sensitivity-label">
+            <span>Sniper</span>
+            <span id="sniperValue">0</span>
+          </div>
+          <div class="progress-container">
+            <div class="progress-bar" id="sniperBar"></div>
+          </div>
+        </div>
+        
+        <div class="sensitivity-item">
+          <div class="sensitivity-label">
+            <span>Free Look</span>
+            <span id="freeLookValue">0</span>
+          </div>
+          <div class="progress-container">
+            <div class="progress-bar" id="freeLookBar"></div>
+          </div>
+        </div>
+        
+        <button class="close-btn" onclick="closeResults()">CLOSE</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Comprehensive mobile device database
+    const mobileBrands = {
+      samsung: ['Galaxy S23 Ultra', 'Galaxy S22', 'Galaxy S21 FE', 'Galaxy Note 20', 'Galaxy A54', 'Galaxy A34', 'Galaxy M33', 'Galaxy Z Fold 5', 'Galaxy Z Flip 5'],
+      apple: ['iPhone 15 Pro Max', 'iPhone 15 Pro', 'iPhone 15 Plus', 'iPhone 15', 'iPhone 14 Pro Max', 'iPhone 14 Pro', 'iPhone 14', 'iPhone 13 Pro Max', 'iPhone 13'],
+      xiaomi: ['Redmi Note 12 Pro+', 'Redmi Note 12 Pro', 'Redmi Note 12', 'Redmi Note 11 Pro', 'Redmi 12', 'Redmi 11 Prime', 'Xiaomi 13 Pro', 'Xiaomi 13', 'Xiaomi 12 Pro'],
+      realme: ['Realme GT Neo 5', 'Realme GT Neo 3T', 'Realme GT 2 Pro', 'Realme 11 Pro+', 'Realme 11 Pro', 'Realme 10 Pro+', 'Realme Narzo 60 Pro', 'Realme Narzo 50'],
+      oneplus: ['OnePlus 11R', 'OnePlus 11', 'OnePlus 10 Pro', 'OnePlus 10T', 'OnePlus Nord 3', 'OnePlus Nord CE 3', 'OnePlus Nord 2T'],
+      oppo: ['Oppo Find X5 Pro', 'Oppo Find X5', 'Oppo Reno 10 Pro+', 'Oppo Reno 10 Pro', 'Oppo Reno 8 Pro', 'Oppo F23', 'Oppo A78'],
+      vivo: ['Vivo X90 Pro', 'Vivo X90', 'Vivo V29 Pro', 'Vivo V27 Pro', 'Vivo V25 Pro', 'Vivo T2', 'Vivo Y100'],
+      motorola: ['Moto Edge 40', 'Moto Edge 30 Ultra', 'Moto G82', 'Moto G73', 'Moto G53', 'Moto E40'],
+      asus: ['ROG Phone 7', 'ROG Phone 6', 'Zenfone 10', 'Zenfone 9'],
+      google: ['Pixel 7 Pro', 'Pixel 7', 'Pixel 6a', 'Pixel 6 Pro'],
+      nokia: ['Nokia X30', 'Nokia G60', 'Nokia X20'],
+      sony: ['Xperia 1 V', 'Xperia 5 V', 'Xperia 10 IV'],
+      infinix: ['Infinix Zero Ultra', 'Infinix Note 30 VIP', 'Infinix Hot 30'],
+      tecno: ['Tecno Phantom V Fold', 'Tecno Camon 20 Pro', 'Tecno Spark 10 Pro']
+    };
+
+    // Generate all devices list
+    let allDevices = [];
+    for (const brand in mobileBrands) {
+      mobileBrands[brand].forEach(model => {
+        allDevices.push(model);
+      });
+    }
+
+    // Initialize the app
+    window.onload = function() {
+      loadDevices();
+    };
+
+    // Load devices into the list
+    function loadDevices() {
+      const devicesList = document.getElementById('devicesList');
+      
+      // Show first 10 devices initially
+      allDevices.slice(0, 10).forEach(device => {
+        const li = document.createElement('li');
+        li.className = 'device-item';
+        li.textContent = device;
+        li.onclick = function() {
+          setDevice(device);
+          generateSensitivity(device);
+        };
+        devicesList.appendChild(li);
+      });
+    }
+
+    // Set device in search box
+    function setDevice(device) {
+      document.getElementById('searchInput').value = device;
+    }
+
+    // Show daily devices popup with 7 random devices
+    function showDailyDevices() {
+      const dailyPopup = document.getElementById('dailyPopup');
+      const dailyDevicesList = document.getElementById('dailyDevicesList');
+      
+      // Clear previous list
+      dailyDevicesList.innerHTML = '';
+      
+      // Get 7 random unique devices
+      const shuffled = [...allDevices].sort(() => 0.5 - Math.random());
+      const dailyDevices = shuffled.slice(0, 7);
+      
+      // Add devices to popup
+      dailyDevices.forEach(device => {
+        const li = document.createElement('li');
+        li.className = 'daily-device-item';
+        li.textContent = device;
+        li.onclick = function() {
+          setDevice(device);
+          closeDailyPopup();
+          generateSensitivity(device);
+        };
+        dailyDevicesList.appendChild(li);
+      });
+      
+      // Show popup
+      dailyPopup.style.display = 'flex';
+    }
+
+    // Close daily devices popup
+    function closeDailyPopup() {
+      document.getElementById('dailyPopup').style.display = 'none';
+    }
+
+    // Generate sensitivity with loading screen
+    function generateSensitivity(deviceName = null) {
+      const device = deviceName || document.getElementById('searchInput').value.trim();
+      
+      if (!device) {
+        alert('Please enter a device name first');
+        return;
+      }
+      
+      // Show loading modal
+      const loadingModal = document.getElementById('loadingModal');
+      const loadingBar = document.getElementById('loadingBar');
+      const loadingPercentage = document.getElementById('loadingPercentage');
+      
+      loadingModal.style.display = 'flex';
+      loadingBar.style.width = '0%';
+      loadingPercentage.textContent = '0%';
+      
+      // Start loading animation (10 seconds)
+      let progress = 0;
+      const interval = setInterval(() => {
+        progress += 1;
+        loadingBar.style.width = `${progress}%`;
+        loadingPercentage.textContent = `${progress}%`;
+        
+        if (progress >= 100) {
+          clearInterval(interval);
+          
+          // Hide loading modal after a short delay
+          setTimeout(() => {
+            loadingModal.style.display = 'none';
+            
+            // Create unique sensitivity based on device name
+            const sensitivity = {
+              general: getRandomValue(device + 'general', 150, 200),  // General always between 150-200
+              redDot: getRandomValue(device + 'redDot', 100, 180),
+              scope2x: getRandomValue(device + 'scope2x', 90, 170),
+              scope4x: getRandomValue(device + 'scope4x', 80, 160),
+              sniper: getRandomValue(device + 'sniper', 50, 120),
+              freeLook: getRandomValue(device + 'freeLook', 120, 200)
+            };
+            
+            showResults(device, sensitivity);
+          }, 500);
+        }
+      }, 100); // 100ms * 100 = 10 seconds
+    }
+
+    // Get consistent random value based on seed
+    function getRandomValue(seed, min, max) {
+      let hash = 0;
+      for (let i = 0; i < seed.length; i++) {
+        hash = seed.charCodeAt(i) + ((hash << 5) - hash);
+      }
+      const random = Math.abs(Math.sin(hash) * 10000);
+      return Math.floor((random - Math.floor(random)) * (max - min + 1)) + min;
+    }
+
+    // Show results in modal
+    function showResults(device, sensitivity) {
+      const resultModal = document.getElementById('resultModal');
+      const resultTitle = document.getElementById('resultTitle');
+      
+      resultTitle.textContent = device;
+      
+      updateSensitivityItem('general', sensitivity.general, 200);
+      updateSensitivityItem('redDot', sensitivity.redDot, 200);
+      updateSensitivityItem('scope2x', sensitivity.scope2x, 200);
+      updateSensitivityItem('scope4x', sensitivity.scope4x, 200);
+      updateSensitivityItem('sniper', sensitivity.sniper, 200);
+      updateSensitivityItem('freeLook', sensitivity.freeLook, 200);
+      
+      resultModal.style.display = 'flex';
+    }
+
+    // Update sensitivity item
+    function updateSensitivityItem(type, value, max) {
+      const valueElement = document.getElementById(`${type}Value`);
+      const barElement = document.getElementById(`${type}Bar`);
+      valueElement.textContent = value;
+      barElement.style.width = `${(value / max) * 100}%`;
+    }
+
+    // Close results
+    function closeResults() {
+      document.getElementById('resultModal').style.display = 'none';
+    }
+  </script>
+</body>
+</html>
