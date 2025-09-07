@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Free Fire Sensitivity Tool</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+    
+    body {
+      font-family: 'Roboto', sans-serif;
+    }
+    
+    .fade-in {
+      animation: fadeIn 0.5s ease-in-out;
+    }
+    
+    .slide-up {
+      animation: slideUp 0.4s ease-out;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    
+    @keyframes slideUp {
+      from { transform: translateY(20px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+    
+    .countdown-circle {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: #1a1a1a;
+      border: 4px solid #333;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      font-weight: bold;
+      margin: 20px auto;
+      color: #fff;
+    }
+    
+    .loading-text {
+      text-align: center;
+      margin: 10px 0;
+      color: #ccc;
+      font-size: 0.9rem;
+    }
+    
+    .whatsapp-btn {
+      width: 100%;
+      max-width: 300px;
+      margin: 20px auto;
+      padding: 12px;
+      background-color: #25D366;
+      color: white;
+      border-radius: 8px;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    }
+    
+    .whatsapp-btn img {
+      width: 24px;
+      height: 24px;
+      margin-right: 10px;
+    }
+  </style>
+</head>
+<body class="bg-black text-white min-h-screen flex flex-col items-center px-4 pt-8 pb-8">
+  <!-- Top Ad Banner -->
+  <div class="w-full mb-4">
+    <div class="w-full h-16 bg-gray-800 border-2 border-gray-700 rounded flex items-center justify-center">
+      <span class="text-sm text-gray-400"><script type="text/javascript">
+	atOptions = {
+		'key' : '8616d9120786e684568800b955b2098e',
+		'format' : 'iframe',
+		'height' : 60,
+		'width' : 468,
+		'params' : {}
+	};
+</script>
+<script type="text/javascript" src="//valleyarmiessunflower.com/8616d9120786e684568800b955b2098e/invoke.js"></script></span>
+    </div>
+  </div>
+
+  <h1 class="text-2xl font-bold mb-6 text-center text-gray-100">Free Fire Sensitivity Tool</h1>
+
+  <div class="w-full max-w-xs space-y-4">
+    <div>
+      <label for="deviceInput" class="block text-sm font-medium mb-1 text-gray-300">Enter your device name</label>
+      <input 
+        type="text" 
+        id="deviceInput" 
+        class="w-full px-4 py-2 rounded bg-gray-900 border border-gray-700 focus:border-gray-500 focus:outline-none text-white"
+        placeholder="e.g. iPhone 13"
+      />
+    </div>
+
+    <button id="generateBtn" class="w-full py-3 rounded font-bold text-black bg-gray-300 hover:bg-gray-400 transition">
+      Generate Sensitivity
+    </button>
+  </div>
+
+  <!-- Loading Screen -->
+  <div id="loadingScreen" class="hidden mt-6 w-full max-w-xs">
+    <div class="text-center">
+      <div class="countdown-circle" id="countdown">20</div>
+      <p class="loading-text">Generating optimal sensitivity settings...</p>
+      <p class="text-xs text-gray-400">Please wait while we optimize for your device</p>
+    </div>
+  </div>
+
+  <!-- Results Card -->
+  <div id="resultsCard" class="hidden mt-6 w-full max-w-xs bg-gray-900 rounded-lg p-5 shadow-lg slide-up">
+    <h2 class="text-xl font-bold mb-4 text-center text-gray-100">Sensitivity Settings</h2>
+    
+    <div id="sensitivityValues" class="space-y-3">
+      <div class="flex justify-between text-sm"><span>General:</span><span id="general">--</span></div>
+      <div class="flex justify-between text-sm"><span>Red Dot:</span><span id="redDot">--</span></div>
+      <div class="flex justify-between text-sm"><span>2x Scope:</span><span id="scope2x">--</span></div>
+      <div class="flex justify-between text-sm"><span>4x Scope:</span><span id="scope4x">--</span></div>
+      <div class="flex justify-between text-sm"><span>Sniper:</span><span id="sniper">--</span></div>
+      <div class="flex justify-between text-sm"><span>Free Look:</span><span id="freeLook">--</span></div>
+    </div>
+  </div>
+
+  <!-- WhatsApp Button -->
+  <a href="https://whatsapp.com/channel/0029VbAiiEDFXUuXwA6Jxd1x" target="_blank" class="whatsapp-btn mt-6">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
+    Join WhatsApp Channel
+  </a>
+
+  <!-- Bottom Ad Banner -->
+  <div class="w-full mt-6">
+    <div class="w-full h-16 bg-gray-800 border-2 border-gray-700 rounded flex items-center justify-center">
+      <span class="text-sm text-gray-400"><script type="text/javascript">
+	atOptions = {
+		'key' : '8616d9120786e684568800b955b2098e',
+		'format' : 'iframe',
+		'height' : 60,
+		'width' : 468,
+		'params' : {}
+	};
+</script>
+<script type="text/javascript" src="//valleyarmiessunflower.com/8616d9120786e684568800b955b2098e/invoke.js"></script></span>
+    </div>
+  </div>
+
+  <script>
+    // DOM Elements
+    const deviceInput = document.getElementById('deviceInput');
+    const generateBtn = document.getElementById('generateBtn');
+    const loadingScreen = document.getElementById('loadingScreen');
+    const countdownElement = document.getElementById('countdown');
+    const resultsCard = document.getElementById('resultsCard');
+    const sensitivityValues = {
+      general: document.getElementById('general'),
+      redDot: document.getElementById('redDot'),
+      scope2x: document.getElementById('scope2x'),
+      sniper: document.getElementById('sniper'),
+      scope4x: document.getElementById('scope4x'),
+      freeLook: document.getElementById('freeLook')
+    };
+
+    // Hash function to generate consistent number from string
+    function hashString(str) {
+      let hash = 0;
+      for (let i = 0; i < str.length; i++) {
+        const char = str.charCodeAt(i);
+        hash = ((hash << 5) - hash) + char;
+        hash = hash & hash; // Convert to 32-bit integer
+      }
+      return Math.abs(hash);
+    }
+
+    // Generate sensitivity values based on device name with minimum thresholds
+    function generateSensitivity(deviceName) {
+      const seed = hashString(deviceName);
+      
+      // Generate 6 values with minimum thresholds
+      const values = [];
+      let tempSeed = seed;
+      
+      for (let i = 0; i < 6; i++) {
+        tempSeed = (tempSeed * 9301 + 49297) % 233280;
+        const random = tempSeed / 233280;
+        
+        // For General: 170-200
+        if (i === 0) {
+          values.push(Math.floor(random * 31) + 170); // 170-200
+        } 
+        // For others: 100-200
+        else {
+          values.push(Math.floor(random * 101) + 100); // 100-200
+        }
+      }
+      
+      return {
+        general: values[0],
+        redDot: values[1],
+        scope2x: values[2],
+        scope4x: values[3],
+        sniper: values[4],
+        freeLook: values[5]
+      };
+    }
+
+    // Display values in UI
+    function displayValues(values) {
+      Object.keys(values).forEach(key => {
+        if (sensitivityValues[key]) {
+          sensitivityValues[key].textContent = values[key];
+        }
+      });
+    }
+
+    // Show loading screen with countdown
+    function startLoading() {
+      let seconds = 20;
+      countdownElement.textContent = seconds;
+      
+      loadingScreen.classList.remove('hidden');
+      resultsCard.classList.add('hidden');
+      
+      // Open your ad link in new tab
+      window.open("https://valleyarmiessunflower.com/mdfnmajyp?key=4ad78f5ba565add611f30c75e85d0d33", "_blank");
+      
+      const interval = setInterval(() => {
+        seconds--;
+        countdownElement.textContent = seconds;
+        
+        if (seconds <= 0) {
+          clearInterval(interval);
+          loadingScreen.classList.add('hidden');
+          resultsCard.classList.remove('hidden');
+          resultsCard.classList.add('fade-in');
+          
+          // Generate and display sensitivity values
+          const deviceName = deviceInput.value.trim();
+          if (deviceName) {
+            const values = generateSensitivity(deviceName);
+            displayValues(values);
+            
+            // Save to localStorage
+            try {
+              localStorage.setItem('ff_device', deviceName);
+              localStorage.setItem('ff_values', JSON.stringify(values));
+            } catch (e) {
+              console.log('Storage error:', e);
+            }
+          }
+        }
+      }, 1000);
+    }
+
+    // Load saved data from localStorage
+    function loadSavedData() {
+      try {
+        const savedDevice = localStorage.getItem('ff_device');
+        const savedValues = localStorage.getItem('ff_values');
+        
+        if (savedDevice && savedValues) {
+          deviceInput.value = savedDevice;
+          
+          const values = JSON.parse(savedValues);
+          displayValues(values);
+          
+          resultsCard.classList.remove('hidden');
+          resultsCard.classList.add('fade-in');
+        }
+      } catch (e) {
+        console.log('Storage access error:', e);
+      }
+    }
+
+    // Event Listeners
+    generateBtn.addEventListener('click', () => {
+      const deviceName = deviceInput.value.trim();
+      if (!deviceName) {
+        alert('Please enter your device name');
+        return;
+      }
+
+      // Start loading countdown and open ad link
+      startLoading();
+    });
+
+    // Load saved data on page load
+    document.addEventListener('DOMContentLoaded', loadSavedData);
+  </script>
+</body>
+</html>
